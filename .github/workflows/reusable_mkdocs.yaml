@@ -70,9 +70,9 @@ jobs:
 
           if [ ! -f ".markdownlint-cli2.jsonc" ]; then
 
-            ls -la gitlab-ci/lint
+            ls -la website-template
 
-            cp -f "gitlab-ci/lint/.markdownlint-cli2.jsonc" ".markdownlint-cli2.jsonc";
+            cp -f "website-template/lint/.markdownlint-cli2.jsonc" ".markdownlint-cli2.jsonc";
 
           fi
 
