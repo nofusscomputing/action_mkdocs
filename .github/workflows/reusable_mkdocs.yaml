@@ -47,7 +47,7 @@ jobs:
       - name: Install Linter
         shell: bash
         run: |
-          npm install markdownlint-cli2 --global
+          npm install markdownlint-cli2@v0.18.1 --global
           npm install markdownlint-cli2-formatter-junit --global       
 
 
