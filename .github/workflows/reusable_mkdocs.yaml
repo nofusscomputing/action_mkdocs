@@ -1,6 +1,6 @@
 ---
 
-name: 'Ansible Collection'
+name: 'MKDocs'
 
 
 on:
@@ -19,7 +19,7 @@ jobs:
   lint:
     name: 'Lint'
     env:
-      MDLINT_PATHS: '"docs/*.md docs/**/*.md docs/**/**/*.md docs/**/**/**/*.md docs/**/**/**/**/**/*.md #CHANGELOG.md"'
+      MDLINT_PATHS: '"docs/*.md docs/**/*.md docs/**/**/*.md docs/**/**/**/*.md docs/**/**/**/**/**/*.md !CHANGELOG.md"'
     runs-on: ubuntu-latest
     steps:
 
@@ -34,12 +34,14 @@ jobs:
           sudo apt update;
           sudo apt install -y --no-install-recommends npm;
 
+
       - name: Install Linter
         shell: bash
         run: |
           npm install markdownlint-cli2@v0.18.1 --global;
           npm install markdownlint-cli2-formatter-junit --global;
           npm install markdownlint-cli2-formatter-template --global;
+
 
       - name: Create Artifact directory
         shell: bash
@@ -77,7 +79,7 @@ jobs:
           mv -vf markdown.junit.xml "artifacts/markdown_lint.junit.xml"
 
       - name: debug ls
-        if: ${{ success() || failure() }}
+        if: success() || failure()
         shell: bash
         run: |
           ls -la artifacts/;
@@ -100,7 +102,7 @@ jobs:
 
 
       - name: Upload build Artifact
-        if: ${{ success() || failure() }}
+        if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
           name: mkdocs-lint
@@ -109,7 +111,7 @@ jobs:
 
 
   lint-reports:
-    name: 'Linting Reports'
+    name: 'Create Report'
     if: success() || failure()
     needs:
       - lint
@@ -117,7 +119,7 @@ jobs:
     steps:
 
 
-      - name: Markdown Lint Report
+      - name: Markdown Lint
         if: success() || failure()
         uses: dorny/test-reporter@v1
         with:
