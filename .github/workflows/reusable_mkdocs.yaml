@@ -129,56 +129,57 @@ jobs:
           reporter: java-junit
 
 
-  build:
-    name: Build
-    if: false
-    needs:
-      - lint
-    runs-on: ubuntu-latest
-    steps:
+
+  # build:
+  #   name: Build
+  #   if: false
+  #   needs:
+  #     - lint
+  #   runs-on: ubuntu-latest
+  #   steps:
 
 
-      - name: Debug
-        shell: bash
-        run: |
+  #     - name: Debug
+  #       shell: bash
+  #       run: |
 
-          echo "To be created";
-
-
-
-  publish:
-    name: Publish to Galaxy
-    if: false
-    needs:
-      - lint
-      - build
-    runs-on: ubuntu-latest
-    steps:
-
-
-      - name: to be created
-        shell: bash
-        run: |
-          echo "to be created";
+  #         echo "To be created";
 
 
 
-  release:
-    if: false
-    needs:
-      - publish
-    name: Mark Release Live
-    runs-on: ubuntu-latest
-    steps:
+  # publish:
+  #   name: Publish to Galaxy
+  #   if: false
+  #   needs:
+  #     - lint
+  #     - build
+  #   runs-on: ubuntu-latest
+  #   steps:
 
 
-      - name: to be created
-        shell: bash
-        run: |
-          echo "to be created";
+  #     - name: to be created
+  #       shell: bash
+  #       run: |
+  #         echo "to be created";
 
-      # - name: Publish Release
-      #   uses: grzegorzkrukowski/action-publish-github-release@v1
-      #   with:
-      #     tag_name: ${{ github.ref_name }}
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+
+
+  # release:
+  #   if: false
+  #   needs:
+  #     - publish
+  #   name: Mark Release Live
+  #   runs-on: ubuntu-latest
+  #   steps:
+
+
+  #     - name: to be created
+  #       shell: bash
+  #       run: |
+  #         echo "to be created";
+
+  #     # - name: Publish Release
+  #     #   uses: grzegorzkrukowski/action-publish-github-release@v1
+  #     #   with:
+  #     #     tag_name: ${{ github.ref_name }}
+  #     #     token: ${{ secrets.GITHUB_TOKEN }}
