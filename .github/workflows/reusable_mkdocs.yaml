@@ -5,12 +5,7 @@ name: 'MKDocs'
 
 on:
   workflow_call:
-    inputs:
-      ANSIBLE_LINTING_MUST_PASS:
-        default: true
-        required: false
-        description: Fail the linting action if the tests failed
-        type: boolean
+
 
 
 jobs:
@@ -62,43 +57,16 @@ jobs:
         run: |
           markdownlint-cli2 $MDLINT_PATHS 1>&1 || EXITCODE=$?
 
-          if [ "${EXITCODE}" ]; then
+          mv -vf markdown.junit.xml "artifacts/markdown_lint.junit.xml";
 
-            echo "exit_code=${EXITCODE}" >> $GITHUB_OUTPUT
+          exit ${EXITCODE};
 
-          else
-
-            echo "exit_code=0" >> $GITHUB_OUTPUT
-
-          fi
-
-          echo "[Trace] GITHUB_OUTPUT[$(cat $GITHUB_OUTPUT)]";
-
-          ls -la;
-          
-          mv -vf markdown.junit.xml "artifacts/markdown_lint.junit.xml"
 
       - name: debug ls
         if: success() || failure()
         shell: bash
         run: |
           ls -la artifacts/;
-
-
-      - name: Check if Linting Error Occured
-        shell: bash
-        run: |
-          if [ "0${{ inputs.ANSIBLE_LINTING_MUST_PASS }}" == "0true" ]; then
-
-            if [ ${{ steps.lint.outputs.exit_code }} -ge 3 ]; then
-
-              echo "[Error] ansible lint failed with  ${{ steps.lint.outputs.exit_code }}";
-              
-              exit ${{ steps.lint.outputs.exit_code }};
-
-            fi # don't fail the job?? 1=failed test, 2=failed command i.e. switch/flag
-
-          fi
 
 
       - name: Upload build Artifact
@@ -124,6 +92,7 @@ jobs:
         uses: dorny/test-reporter@v1
         with:
           artifact: mkdocs-lint
+          fail-on-error: 'false'
           name: Markdown Lint Report
           path: 'markdown_lint.junit.xml'
           reporter: java-junit
