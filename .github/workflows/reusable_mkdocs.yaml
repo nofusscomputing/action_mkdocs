@@ -34,8 +34,8 @@ jobs:
         shell: bash
         run: |
           npm install markdownlint-cli2@v0.18.1 --global;
-          npm install markdownlint-cli2-formatter-junit --global;
-          npm install markdownlint-cli2-formatter-template --global;
+          npm install markdownlint-cli2-formatter-junit@0.0.14 --global;
+          npm install markdownlint-cli2-formatter-template@0.0.4 --global;
 
 
       - name: Create Artifact directory
